@@ -1,0 +1,37 @@
+nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #f8f8f8;
+    padding: 20px;
+    font-size: 20px;
+    font-weight: bold;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+    height: 20px;
+
+  }
+  
+  .navbar-brand {
+    color: #333;
+    text-decoration: none;
+    font-size: 28px;
+  }
+  
+  .navbar-items {
+    display: flex;
+    gap: 20px;
+  }
+  
+  .navbar-items li {
+    list-style: none;
+  }
+  
+  .navbar-items a {
+    color: #333;
+    text-decoration: none;
+    transition: all 0.3s ease;
+  }
+  
+  .navbar-items a:hover {
+    color: #666;
+  }

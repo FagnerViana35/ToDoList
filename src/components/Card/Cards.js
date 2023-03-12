@@ -1,55 +1,64 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState} from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { addTodoAction, deleteTodoAction} from '../../redux/actions/todoActions';
+import  {fetchApiData}  from '../../redux/actions/apiActions';
+import FormularioCards from '../FormularioCards/CreateTarefa/index';
+import { deleteTarefa } from '../../redux/actions/apiActions';
+import EditarTarefaForm from '../FormularioCards/EditTarefa/index'
 import './index.scss';
 
 
 function TodoList() {
-  const [title, setTitle] = useState('');
-  const [text, setText] = useState('');
-  const [priority, setPriority] = useState('');
-  const [contador, setContador] = useState(0);
-
+  const [editTarefaId, setEditTarefaId] = useState(null);
+  const apiState = useSelector(state => state.api);
+  const { data, isLoading, error } = apiState || {};
+  console.log(isLoading,)
   const dispatch = useDispatch();
 
-  const todos = useSelector(state => state.todos);
 
-  function handleAddTodo() {
-    if (!text) return;
-    const newTodo = { id: contador, titulo: title, descricao: text, prioridade: priority };
-    dispatch(addTodoAction(newTodo));
-    setContador(contador => contador + 1);
-    setTitle('')
-    setText('')
-    setPriority('');
+  const handleDelete = (id) => {
+    dispatch(deleteTarefa(id));
+  };
+
+  const handleEdit = (id) => {
+    setEditTarefaId(id);
+  };
+
+  useEffect(() => {
+    dispatch(fetchApiData());
+  }, [dispatch]);
+
+  if (isLoading) {
+    return <p>Loading...</p>;
   }
 
-  function handleDelete(id) {
-    dispatch(deleteTodoAction(id));
+  if (error) {
+    return <p>{error}</p>;
   }
+  
 
   return (
     <div>
         <div className='card'>
             <h1>Todo List</h1>
             <div className='input-card'>
-                {/* <input type="text" value={title} onChange={e => setTitle(e.target.value)} /> */}
-                <textarea type="text" value={text} onChange={e => setText(e.target.value)} />
-                <select value={priority} onChange={e => setPriority(e.target.value)}>
-                    <option value="low">Baixa</option>
-                    <option value="medium">Média</option>
-                    <option value="high">Alta</option>
-                </select>
-                <button onClick={handleAddTodo}>Add Todo</button>
+            {editTarefaId ? (
+            // renderiza o formulário de edição se editTarefaId não for nulo
+            <EditarTarefaForm id={editTarefaId} onCancel={() => setEditTarefaId(null)} />
+          ) : (
+            // renderiza o formulário de criação de tarefas se editTarefaId for nulo
+            <FormularioCards />
+          )}
             </div>
         </div>
         <div className='cards'>
-            {todos.map(todo => (
-                <ul key={todo.id} className="todos-card">
+            {data?.map(item => (
+                <ul key={item.id} className="todos-card">
                     <li className='descricao'>
-                        {contador}
-                        {todo.descricao}
-                        <button onClick={() => handleDelete(todo.id)}>Delete</button>
+                        {item.id}
+                        {item.title}
+                        {item.subtitle}
+                        <button onClick={() => handleEdit(item.id)}>Editar</button>
+                        <button onClick={() => handleDelete(item.id)}>Delete</button>
                     </li>
                 </ul>
             ))}
