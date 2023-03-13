@@ -102,6 +102,59 @@ export const editTarefa = (id, newData) => async (dispatch) => {
   }
 };
 
+export const cadastro = (nome, email, senha) => async dispatch => {
+  try {
+    dispatch(loginRequest());
+
+    const response = await fetch(`https://localhost:7223/listarUser?skip=0&take=50`);
+    const data = await response.json();
+
+    const user = data.find(u => u.email === email && u.senha === senha);
+    if (user) {
+      dispatch(loginSuccess(user));
+      window.location.href = '/home';
+    } else {
+      dispatch(loginFailure('Invalid username or password'));
+      alert('Senha ou Email incorreto(s)')
+    }
+  } catch (error) {
+    dispatch(loginFailure(error.message));
+  }
+};
+
+export const cadastrarUsuarioRequest = () => ({
+  type: 'CADASTRAR_USUARIO_REQUEST'
+});
+
+export const cadastrarUsuarioSuccess = (user) => ({
+  type: 'CADASTRAR_USUARIO_SUCCESS',
+  payload: user
+});
+
+export const cadastrarUsuarioFailure = (error) => ({
+  type: 'CADASTRAR_USUARIO_FAILURE',
+  payload: error
+});
+
+export const cadastrarUsuario = (nome, email, senha) => async (dispatch) => {
+  try {
+    dispatch(cadastrarUsuarioRequest());
+    const response = await fetch('https://localhost:7223/createUser', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({ nome, email, senha })
+    });
+    const data = await response.json();
+    dispatch(cadastrarUsuarioSuccess(data));
+    window.location.href = '/home';
+  } catch (error) {
+    dispatch(cadastrarUsuarioFailure(error.message));
+  }
+};
+
+
 const loginRequest = () => ({ type: 'LOGIN_REQUEST' }); 
 const loginSuccess = user => ({ type: 'LOGIN_SUCCESS', payload: user });
 const loginFailure = error => ({ type: 'LOGIN_FAILURE', payload: error });

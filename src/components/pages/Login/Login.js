@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { Link } from 'react-router-dom';
 import { login } from '../../../redux/actions/apiActions';
 import './index.scss'
 
@@ -26,6 +27,7 @@ const Login = () => {
           <input type="password" value={senha} onChange={(e) => setSenha(e.target.value)} />
         </div>
         <button type="submit">Login</button>
+        <Link to={'/register'}>Register</Link>
       </form>
     </div>
   );
