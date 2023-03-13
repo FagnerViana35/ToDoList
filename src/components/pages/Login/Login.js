@@ -1,59 +1,34 @@
-import React, { useState } from 'react';
-import { Route, Redirect } from 'react-router-dom';
+import { useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { login } from '../../../redux/actions/apiActions';
+import './index.scss'
 
-const validCredentials = {
-  username: 'user',
-  password: 'password'
-};
+const Login = () => {
+  const [email, setEmail] = useState('');
+  const [senha, setSenha] = useState('');
 
-const PrivateRoute = ({ component: Component, ...rest }) => {
-  const isAuthenticated = localStorage.getItem('token') !== null;
+  const dispatch = useDispatch();
+  const submitHandler = (e) => {
+    e.preventDefault();
+    dispatch(login(email, senha));
+    console.log(email, senha);
+  }
   return (
-    <Route {...rest} render={props => (
-      isAuthenticated ? (
-        <Component {...props} />
-      ) : (
-        <Redirect to={{
-          pathname: '/login',
-          state: { from: props.location }
-        }} />
-      )
-    )} />
+    <div>
+      <form className='form' onSubmit={submitHandler}>
+        <h1>Login</h1>
+        <div>
+          <label>Email:</label>
+          <input type="text" value={email} onChange={(e) => setEmail(e.target.value)} />
+        </div>
+        <div>
+          <label>Senha:</label>
+          <input type="password" value={senha} onChange={(e) => setSenha(e.target.value)} />
+        </div>
+        <button type="submit">Login</button>
+      </form>
+    </div>
   );
-};
+}
 
-const Login = (props) => {
-  const [username, setUsername] = useState('');
-  const [password, setPassword] = useState('');
-
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    if (username === validCredentials.username && password === validCredentials.password) {
-      const token = Math.random().toString(36).substring(7);
-      localStorage.setItem('token', token);
-      props.history.push('/');
-    }
-  };
-
-  return (
-    <form onSubmit={handleSubmit}>
-      <div>
-        <label htmlFor="username">Username:</label>
-        <input type="text" id="username" value={username} onChange={event => setUsername(event.target.value)} />
-      </div>
-      <div>
-        <label htmlFor="password">Password:</label>
-        <input type="password" id="password" value={password} onChange={event => setPassword(event.target.value)} />
-      </div>
-      <button type="submit">Login</button>
-    </form>
-  );
-};
-
-const Logout = (props) => {
-  localStorage.removeItem('token');
-  props.history.push('/login');
-  return null;
-};
-
-export { PrivateRoute, Login, Logout };
+export default Login;

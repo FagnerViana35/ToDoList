@@ -3,7 +3,7 @@ import CardToDoList from '../../Card/index'
 import NavBar from '../../NavBar/index';
 import './index.scss';
 
-function TodoList() {
+function Home() {
 
     return (
         <div className='container'>
@@ -17,4 +17,4 @@ function TodoList() {
     );
 }
 
-export default TodoList;
+export default Home;

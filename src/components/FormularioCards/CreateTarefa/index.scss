@@ -1,0 +1,21 @@
+.formulario{
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+}
+
+.title{
+    margin-right: 35px;
+}
+.subTitle{
+    margin-right: 10px;
+}
+
+.submit{
+    width: 30%;
+}
+
+.formulario div:nth-child(2){
+    display: flex;
+    align-items: center;
+}

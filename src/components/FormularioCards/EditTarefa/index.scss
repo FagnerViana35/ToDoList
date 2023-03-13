@@ -1,0 +1,25 @@
+.formulario-edit{
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+}
+
+.subTitle-edit{
+    display: flex;
+    align-items: center;
+}
+
+.subTitle-edit label{
+    margin-right: 10px;
+}
+
+.botoes-edit{
+    display: flex;
+    justify-content: space-around;
+    padding: 5px;
+    padding-left: 40px;
+}
+
+.botoes-edit button:nth-child(2){
+    margin-left: 20px;
+}

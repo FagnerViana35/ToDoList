@@ -11,6 +11,13 @@ export const CREATE_TASK_FAILURE = 'CREATE_TASK_FAILURE';
 export const DELETE_TAREFA_SUCCESS = 'DELETE_TAREFA_SUCCESS';
 export const DELETE_TAREFA_ERROR = 'DELETE_TAREFA_ERROR';
 
+export const EDIT_TAREFA_SUCCESS = 'EDIT_TAREFA_SUCCESS';
+export const EDIT_TAREFA_ERROR = 'EDIT_TAREFA_ERROR';
+
+export const LOGIN_REQUEST = 'LOGIN_REQUEST';
+export const LOGIN_SUCCESS = 'LOGIN_SUCCESS';
+export const LOGIN_FAILURE = 'LOGIN_FAILURE';
+export const LOGOUT = 'LOGOUT';
 
 
 export const fetchApiRequest = () => ({
@@ -65,7 +72,6 @@ export const createTask = (taskData) => async (dispatch) => {
   }
 };
 
-
 export const deleteTarefa = (id) => async (dispatch) => {
   try {
     await axios.delete(`https://localhost:7223/deleteTarefa/${id}`);
@@ -94,6 +100,40 @@ export const editTarefa = (id, newData) => async (dispatch) => {
   } catch (error) {
     dispatch({ type: 'EDIT_TAREFA_ERROR', payload: error.message });
   }
+};
+
+const loginRequest = () => ({ type: 'LOGIN_REQUEST' }); 
+const loginSuccess = user => ({ type: 'LOGIN_SUCCESS', payload: user });
+const loginFailure = error => ({ type: 'LOGIN_FAILURE', payload: error });
+
+
+const logoutRequest = () => ({type: 'LOGOUT_REQUEST',});
+const clearUserInfo = () => ({type: 'CLEAR_USER_INFO',});
+
+export const login = (email, senha) => async dispatch => {
+  try {
+    dispatch(loginRequest());
+
+    const response = await fetch(`https://localhost:7223/listarUser?skip=0&take=50`);
+    const data = await response.json();
+
+    const user = data.find(u => u.email === email && u.senha === senha);
+    if (user) {
+      dispatch(loginSuccess(user));
+      window.location.href = '/home';
+    } else {
+      dispatch(loginFailure('Invalid username or password'));
+      alert('Senha ou Email incorreto(s)')
+    }
+  } catch (error) {
+    dispatch(loginFailure(error.message));
+  }
+};
+
+export const logout = () => dispatch => {
+  dispatch(logoutRequest());
+  dispatch(clearUserInfo()); // remove as informações do usuário do estado global
+  window.location.href = '/'; // redireciona para a página de login
 };
 
 

@@ -1,7 +1,9 @@
 // apiReducer.js
 import { FETCH_API_REQUEST, FETCH_API_SUCCESS, FETCH_API_FAILURE } from '../actions/apiActions';
-
 import {DELETE_TAREFA_SUCCESS, DELETE_TAREFA_ERROR} from '../actions/apiActions'
+import {EDIT_TAREFA_SUCCESS, EDIT_TAREFA_ERROR} from '../actions/apiActions'
+
+import {LOGIN_REQUEST, LOGIN_SUCCESS, LOGIN_FAILURE, LOGOUT} from '../actions/apiActions';
 
 const initialState = {
     data: [],
@@ -9,7 +11,7 @@ const initialState = {
     error: null
   };
   
-  const apiReducer = (state = initialState, action) => {
+export const apiReducer = (state = initialState, action) => {
     switch (action.type) {
       case FETCH_API_REQUEST:
         return {
@@ -38,8 +40,6 @@ const initialState = {
     }
   };
   
-  export default apiReducer;
-
 export const deletarTarefaReducer = (state = initialState, action) => {
     switch (action.type) {
       case DELETE_TAREFA_SUCCESS:
@@ -60,9 +60,9 @@ export const deletarTarefaReducer = (state = initialState, action) => {
     }
   };
 
-  export const editarTarefaReducer = (state = initialState, action) => {
+export const editarTarefaReducer = (state = initialState, action) => {
     switch (action.type) {
-      case 'EDIT_TAREFA_SUCCESS':
+      case EDIT_TAREFA_SUCCESS:
         const updatedTarefas = state.tarefas.map((tarefa) =>
           tarefa.id === action.payload.id ? action.payload.updatedTarefa : tarefa
         );
@@ -71,7 +71,7 @@ export const deletarTarefaReducer = (state = initialState, action) => {
           tarefas: updatedTarefas,
           loading: false,
         };
-      case 'EDIT_TAREFA_ERROR':
+      case EDIT_TAREFA_ERROR:
         return {
           ...state,
           error: action.payload,
@@ -81,6 +81,21 @@ export const deletarTarefaReducer = (state = initialState, action) => {
         return state;
     }
   };
+
+export const userReducer = (state = initialState, action) => {
+    switch (action.type) {
+      case LOGIN_REQUEST: 
+        return { ...state, loading: true };
+      case LOGIN_SUCCESS:
+        return { ...state, user: action.payload, loading: false, error: null };
+      case LOGIN_FAILURE:
+        return { ...state, error: action.payload, loading: false };
+      case LOGOUT:
+        return { ...state, user: null };
+      default:
+        return state;
+    }
+};
 
 
   
