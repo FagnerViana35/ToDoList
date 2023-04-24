@@ -1,8 +1,8 @@
 import { useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch} from 'react-redux';
 import { Link } from 'react-router-dom';
 import { login } from '../../../redux/actions/apiActions';
-import './index.scss'
+import './index.css'
 
 const Login = () => {
   const [email, setEmail] = useState('');

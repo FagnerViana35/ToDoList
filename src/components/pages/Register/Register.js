@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch} from 'react-redux';
 import { cadastrarUsuario } from '../../../redux/actions/apiActions';
-import './index.scss';
+import './index.css';
 
 const CadastroUsuario = () => {
   const [nome, setNome] = useState('');

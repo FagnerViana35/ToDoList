@@ -37,9 +37,9 @@ export const fetchApiFailure = error => ({
 export const fetchApiData = () => {
   return dispatch => {
     dispatch(fetchApiRequest());
-    axios.get('https://localhost:7223/listaTarefa')
+    axios.get('http://localhost:4200/tasks')
       .then(response => {
-        const data = response.data;
+        const data = response;
         dispatch(fetchApiSuccess(data));
       })
       .catch(error => {
@@ -50,23 +50,16 @@ export const fetchApiData = () => {
 };
 
 
-export const createTask = (taskData) => async (dispatch) => {
+export const createTask = (newTask) => async (dispatch) => {
   try {
-    const response = await fetch('https://localhost:7223/createTarefa', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(taskData)
-    });
+    const response = await axios.post('http://localhost:4200/tasks', newTask);
 
     if (!response.ok) {
       const error = await response.json();
       throw new Error(error.message);
     }
 
-    const createdTask = await response.json();
-    dispatch({ type: 'CREATE_TASK_SUCCESS', payload: createdTask });
+    dispatch({ type: 'CREATE_TASK_SUCCESS', payload: newTask });
   } catch (error) {
     dispatch({ type: 'CREATE_TASK_FAILURE', payload: error.message });
   }
@@ -74,7 +67,8 @@ export const createTask = (taskData) => async (dispatch) => {
 
 export const deleteTarefa = (id) => async (dispatch) => {
   try {
-    await axios.delete(`https://localhost:7223/deleteTarefa/${id}`);
+    console.log('Chegou aqui')
+    await axios.delete(`http://localhost:4200/tasks?id=${id}`);
     // Dispara a action de sucesso
     dispatch(deleteTarefaSuccess(id));
   } catch (error) {
@@ -95,7 +89,7 @@ export const deleteTarefaError = (error) => ({
 
 export const editTarefa = (id, newData) => async (dispatch) => {
   try {
-    const response = await axios.put(`https://localhost:7223/editarTarefa/${id}`, newData);
+    const response = await axios.put(`http://localhost:4200/tasks/${id}`, newData);
     dispatch({ type: 'EDIT_TAREFA_SUCCESS', payload: response.data });
   } catch (error) {
     dispatch({ type: 'EDIT_TAREFA_ERROR', payload: error.message });
@@ -139,15 +133,8 @@ export const cadastrarUsuarioFailure = (error) => ({
 export const cadastrarUsuario = (nome, email, senha) => async (dispatch) => {
   try {
     dispatch(cadastrarUsuarioRequest());
-    const response = await fetch('https://localhost:7223/createUser', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({ nome, email, senha })
-    });
-    const data = await response.json();
-    dispatch(cadastrarUsuarioSuccess(data));
+    const response = await axios.post('http://localhost:4200/users', {nome, email, senha});
+    dispatch(cadastrarUsuarioSuccess(response));
     window.location.href = '/home';
   } catch (error) {
     dispatch(cadastrarUsuarioFailure(error.message));
@@ -167,13 +154,15 @@ export const login = (email, senha) => async dispatch => {
   try {
     dispatch(loginRequest());
 
-    const response = await fetch(`https://localhost:7223/listarUser?skip=0&take=50`);
-    const data = await response.json();
-
+    const response = await axios.get(`http://localhost:4200/users?email=${email}&senha=${senha}`);
+    const data = response.data;
+    console.log(response)
     const user = data.find(u => u.email === email && u.senha === senha);
+    console.log(data)
+    console.log(user)
     if (user) {
-      dispatch(loginSuccess(user));
       window.location.href = '/home';
+      dispatch(loginSuccess(user));
     } else {
       dispatch(loginFailure('Invalid username or password'));
       alert('Senha ou Email incorreto(s)')

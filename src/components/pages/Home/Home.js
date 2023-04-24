@@ -1,7 +1,7 @@
 import React from 'react';
 import CardToDoList from '../../Card/index'
 import NavBar from '../../NavBar/index';
-import './index.scss';
+import './index.css';
 
 function Home() {
 

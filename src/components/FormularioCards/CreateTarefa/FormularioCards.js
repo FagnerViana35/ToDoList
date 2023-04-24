@@ -1,10 +1,10 @@
 import React, { useState } from "react";
 import { useDispatch } from 'react-redux';
 import { createTask } from '../../../redux/actions/apiActions';
-import './index.scss'
+import './index.css';
 
 const FormularioCards = () => {
-  const [formData, setFormData] = useState({ title: '', subTitle: '' });
+  const [formData, setFormData] = useState({ title: '', description: '' });
   const dispatch = useDispatch();
   
   
@@ -12,24 +12,26 @@ const FormularioCards = () => {
     setFormData({
       ...formData,
       [event.target.name]: event.target.value
+      
     });
+    console.log(formData)
   };
   
   const handleFormSubmit = (event) => {
     event.preventDefault();
     dispatch(createTask(formData));
-    formData.subTitle = ''
     formData.title = ''
+    formData.description = ''
     window.location.reload();
   };
-  const isDisabled = formData.title === '' || formData.subTitle === '';
+  const isDisabled = formData.title === '' || formData.description === '';
 
   return (
   <form onSubmit={handleFormSubmit} className="formulario">
     <div>
       <label className="title" htmlFor="title">Title:</label>
       <input
-        maxlength="10"
+        maxLength="10"
         type="text"
         id="title"
         name="title"
@@ -38,12 +40,12 @@ const FormularioCards = () => {
       />
     </div>
     <div>
-      <label className="subTitle" htmlFor="subTitle">SubTitle:</label>
+      <label className="description" htmlFor="description">SubTitle:</label>
       <textarea
-        maxlength="50"
-        id="subTitle"
-        name="subTitle"
-        value={formData.subTitle}
+        maxLength="35"
+        id="description"
+        name="description"
+        value={formData.description}
         onChange={handleInputChange}
       />
     </div>
