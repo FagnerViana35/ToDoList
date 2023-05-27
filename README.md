@@ -71,3 +71,10 @@ This section has moved here: [https://facebook.github.io/create-react-app/docs/t
 
 Rodar projeto backend: json-server --watch db.json --port 4200
 Rodar projeto frontend: yarn start ou npm start 
+
+
+Falta fazer:
+1 - Edição de tarefa
+2 - Separar por usuário as tarefas
+3 - Conseguir ordernar as tarefas drop(igual no Jira)
+4 - Colocar disable na tarefas feitas

@@ -3,6 +3,10 @@
     align-items: center;
     flex-direction: column;
 }
+.description-edit{
+    display: flex;
+    align-items: center;
+}
 
 .subTitle-edit{
     display: flex;

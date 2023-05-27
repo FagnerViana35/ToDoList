@@ -67,8 +67,8 @@ export const createTask = (newTask) => async (dispatch) => {
 
 export const deleteTarefa = (id) => async (dispatch) => {
   try {
-    console.log('Chegou aqui')
-    await axios.delete(`http://localhost:4200/tasks?id=${id}`);
+    console.log('Chegou aqui:', id)
+    axios.delete(`http://localhost:4200/tasks/${id}`);
     // Dispara a action de sucesso
     dispatch(deleteTarefaSuccess(id));
   } catch (error) {

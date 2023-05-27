@@ -11,7 +11,7 @@ import './index.css';
 
 function TodoList() {
   const [editTarefaId, setEditTarefaId] = useState(null);
-  const [showModal] = useState(false);
+  const [showModal, setShowModal] = useState(false);
   const apiState = useSelector(state => state.api);
   const { data, isLoading, error } = apiState || {};
   const dispatch = useDispatch();
@@ -20,12 +20,12 @@ function TodoList() {
 
   const handleDelete = (id) => {
     dispatch(deleteTarefa(id));
-    // setShowModal(true);
-    // if(showModal === false){
-    //   setTimeout(() => {
-    //     window.location.reload();
-    //   }, 1000);
-    // }
+    setShowModal(true);
+    if(showModal === false){
+      setTimeout(() => {
+        window.location.reload();
+      }, 1000);
+    }
   };
 
   const handleEdit = (id) => {
