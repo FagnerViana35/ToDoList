@@ -1,65 +1,32 @@
 {
   "users": [
     {
-      "nome": "Valquiria",
-      "email": "val@gmail.com",
+      "nome": "Fagner",
+      "email": "fagner@gmail.com",
       "senha": "123456",
       "id": 1
     },
     {
-      "nome": "Fagner",
-      "email": "fagner@gmail.com",
+      "nome": "Valquiria",
+      "email": "val@gmail.com",
       "senha": "123456",
       "id": 2
-    },
-    {
-      "nome": "Fagner",
-      "email": "taxa@gmail.com",
-      "senha": "123456",
-      "id": 3
-    },
-    {
-      "nome": "Taxa1",
-      "email": "taxa1@gmail.com",
-      "senha": "123456",
-      "id": 4
     }
   ],
   "tasks": [
     {
-      "title": "Novo",
-      "description": "reetete",
-      "id": 2,
-      "risco": true,
-      "idUser": 1
+      "title": "Estudo",
+      "description": "Tenho que estudar React e Angular",
+      "risco": false,
+      "idUser": 1,
+      "id": 1
     },
     {
-      "title": "dere",
-      "description": "refe",
+      "title": "Estudar ",
+      "description": "Estudar .Net em C#",
       "risco": false,
-      "id": 3,
-      "idUser": 1
-    },
-    {
-      "title": "fienjfe",
-      "description": "ertet",
-      "risco": false,
-      "id": 4,
-      "idUser": 1
-    },
-    {
-      "title": "Casa",
-      "description": "Casa",
-      "risco": false,
-      "idUser": 4,
-      "id": 6
-    },
-    {
-      "title": "Editando",
-      "description": "Editadodre",
-      "risco": false,
-      "idUser": 3,
-      "id": 7
+      "idUser": 2,
+      "id": 2
     }
   ]
 }
