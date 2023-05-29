@@ -1,12 +1,15 @@
-import React, { useState } from 'react';
-import { useDispatch} from 'react-redux';
+import React, { useEffect, useState } from 'react';
+import { useDispatch, useSelector} from 'react-redux';
 import { cadastrarUsuario } from '../../../redux/actions/apiActions';
+import { fetchApiDataUsers } from '../../../redux/actions/apiActions';
 import './index.css';
 
 const CadastroUsuario = () => {
   const [nome, setNome] = useState('');
   const [email, setEmail] = useState('');
   const [senha, setSenha] = useState('');
+  const apiState = useSelector(state => state.api);
+  const { data, isLoading, error } = apiState.data || {};
   const dispatch = useDispatch();
 //   const { error, isLoading, user } = useSelector((state) => state.cadastroUsuario);
 
@@ -22,9 +25,29 @@ const CadastroUsuario = () => {
     setSenha(event.target.value);
   };
 
+  useEffect(() => {
+    dispatch(fetchApiDataUsers());
+  }, [dispatch]);
+
+
+  const verificarUsuarioExistente = (email) => {
+    const usuarioExistente = data?.find((usuario) => usuario.email === email);
+    console.log(usuarioExistente)
+    return !!usuarioExistente;
+  };
+
+  useEffect(() =>{
+    console.log(verificarUsuarioExistente('usuario@teste.com'))
+  })
   const handleSubmit = (event) => {
     event.preventDefault();
-    dispatch(cadastrarUsuario(nome, email, senha));
+    if(verificarUsuarioExistente(email)){
+      alert('Usuario Existente')
+    }else{
+      dispatch(cadastrarUsuario(nome, email, senha));
+    }
+
+    
     
   };
 

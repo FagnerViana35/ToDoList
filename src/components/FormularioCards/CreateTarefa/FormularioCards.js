@@ -1,10 +1,16 @@
-import React, { useState } from "react";
+import React, { useEffect, useState} from "react";
 import { useDispatch } from 'react-redux';
 import { createTask } from '../../../redux/actions/apiActions';
 import './index.css';
 
 const FormularioCards = () => {
-  const [formData, setFormData] = useState({ title: '', description: '' });
+  const userData = JSON.parse(localStorage.getItem('dados'));
+  let idUser
+  userData.map((usuario) => (
+    idUser = usuario.id
+  ))
+
+  const [formData, setFormData] = useState({ title: '', description: '', risco: false, idUser: idUser });
   const dispatch = useDispatch();
   
   
@@ -16,6 +22,15 @@ const FormularioCards = () => {
     });
     console.log(formData)
   };
+
+  useEffect(() => {
+    // const userData = JSON.parse(localStorage.getItem('dados'));
+    // let userId;
+    // userData.map((usuario) => (
+    //   userId = usuario.id
+    // ))
+    console.log(idUser);
+  }, [dispatch]);
   
   const handleFormSubmit = (event) => {
     event.preventDefault();

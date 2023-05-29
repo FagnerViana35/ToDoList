@@ -144,3 +144,11 @@
 .modal-content button:hover {
   background-color: #0069d9; /* Cor de fundo do botão ao passar o mouse */
 }
+
+.riscado {
+  text-decoration: line-through;
+}
+
+.risco {
+  text-decoration: line-through;
+}

@@ -49,6 +49,51 @@ export const fetchApiData = () => {
   };
 };
 
+export const fetchApiDataUsers = () => {
+  return dispatch => {
+    dispatch(fetchApiRequest());
+    axios.get('http://localhost:4200/users')
+      .then(response => {
+        const data = response;
+        dispatch(fetchApiSuccess(data));
+      })
+      .catch(error => {
+        const errorMsg = error.message;
+        dispatch(fetchApiFailure(errorMsg));
+      });
+  };
+};
+
+export const fetchApiDataUsersPorEmail = (email) => {
+  return dispatch => {
+    dispatch(fetchApiRequest());
+    axios.get(`http://localhost:4200/users/?email=${email}`)
+      .then(response => {
+        const data = response;
+        dispatch(fetchApiSuccess(data));
+      })
+      .catch(error => {
+        const errorMsg = error.message;
+        dispatch(fetchApiFailure(errorMsg));
+      });
+  };
+};
+
+export const fetchApiDataUsersPorId = (id) => {
+  return dispatch => {
+    dispatch(fetchApiRequest());
+    axios.get(`http://localhost:4200/tasks/?idUser=${id}`)
+      .then(response => {
+        const data = response;
+        dispatch(fetchApiSuccess(data));
+      })
+      .catch(error => {
+        const errorMsg = error.message;
+        dispatch(fetchApiFailure(errorMsg));
+      });
+  };
+};
+
 
 export const createTask = (newTask) => async (dispatch) => {
   try {
@@ -135,7 +180,7 @@ export const cadastrarUsuario = (nome, email, senha) => async (dispatch) => {
     dispatch(cadastrarUsuarioRequest());
     const response = await axios.post('http://localhost:4200/users', {nome, email, senha});
     dispatch(cadastrarUsuarioSuccess(response));
-    window.location.href = '/home';
+    window.location.href = '/';
   } catch (error) {
     dispatch(cadastrarUsuarioFailure(error.message));
   }

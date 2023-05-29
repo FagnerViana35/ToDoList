@@ -12,36 +12,41 @@ const EditTarefaForm = ({ id, title, description}) => {
   
   const [newTitle, setNewTitle] = useState(title);
   const [newDescription, setNewDescription] = useState(description);
-  const [editTitle, setEditTitle] = useState();
-  const [editDescription, seteditDescription] = useState();
+
+  const userData = JSON.parse(localStorage.getItem('dados'));
+  let idUser
+  userData.map((usuario) => (
+    idUser = usuario.id
+  ))
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    dispatch(editTarefa(id, { title: newTitle, description: newDescription }));
+    dispatch(editTarefa(id, { title: newTitle, description: newDescription, risco: false, idUser: idUser }));
     window.location.reload();
   };
-  console.log("Foi aqui",title, description)
 
   const cancel = () => {
     window.location.reload();
-  } 
+  }
 
-  console.log(data.data);
-
+  console.log(data.data)
   const isDisabled = !newTitle || !newDescription;
 
   return (
     <form onSubmit={handleSubmit} className='formulario-edit'>
       <h2>Editar Tarefa</h2>
-      <div>
-        <label className="title" htmlFor="title">Title:</label>
-        <input maxLength="10" type="text" value={newTitle} onChange={(e) => setNewTitle(e.target.value)} />
-      </div>
-
-      <div className="description-edit">
-        <label htmlFor="description">Description:</label>
-        <textarea maxLength="35" value={newDescription} onChange={(e) => setNewDescription(e.target.value)} />
-      </div>
+      {data.data.map((edit) => (
+        <>
+          <div>
+            <label className="title" htmlFor="title">Title:</label>
+            <input maxLength="10" type="text" value={title} onChange={(e) => setNewTitle(e.target.value)} />
+          </div>
+          <div className="description-edit">
+              <label htmlFor="description">Description:</label>
+              <textarea maxLength="35" value={description} onChange={(e) => setNewDescription(e.target.value)} />
+          </div>
+        </>
+      ))}
       <div className='botoes-edit'>
         <button type="submit" disabled={isDisabled}><MdSave />Salvar</button>
         <button type='button' onClick={cancel}><MdCancel /> Cancelar</button>
