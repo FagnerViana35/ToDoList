@@ -74,7 +74,7 @@ Rodar projeto frontend: yarn start ou npm start
 
 
 Falta fazer:
-1 - Edição de tarefa
-2 - Separar por usuário as tarefas
-3 - Conseguir ordernar as tarefas drop(igual no Jira)
-4 - Colocar disable na tarefas feitas
+1 - Edição de tarefa OK
+2 - Separar por usuário as tarefas OK
+3 - Conseguir ordernar as tarefas drop(igual no Jira) Não deu tempo as tarefas drop
+4 - Colocar disable na tarefas feitas OK

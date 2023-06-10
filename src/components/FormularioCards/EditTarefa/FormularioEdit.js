@@ -39,11 +39,11 @@ const EditTarefaForm = ({ id, title, description}) => {
         <>
           <div>
             <label className="title" htmlFor="title">Title:</label>
-            <input maxLength="10" type="text" value={title} onChange={(e) => setNewTitle(e.target.value)} />
+            <input maxLength="10" type="text" onChange={(e) => setNewTitle(e.target.value)} />
           </div>
           <div className="description-edit">
               <label htmlFor="description">Description:</label>
-              <textarea maxLength="35" value={description} onChange={(e) => setNewDescription(e.target.value)} />
+              <textarea maxLength="35" onChange={(e) => setNewDescription(e.target.value)} />
           </div>
         </>
       ))}

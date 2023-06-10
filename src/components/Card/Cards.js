@@ -43,7 +43,7 @@ function TodoList() {
     if (updatedTasks) {
       if (event.target.checked) {
         
-        //window.location.reload();
+          //window.location.reload();
         console.log('Foi')
       } else {
         console.log('Não ')

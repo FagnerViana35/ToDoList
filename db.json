@@ -1,29 +1,22 @@
 {
   "users": [
     {
-      "nome": "Fagner",
-      "email": "fagner@gmail.com",
+      "nome": "Luiz",
+      "email": "luiz@luiz.com",
       "senha": "123456",
       "id": 1
     },
     {
-      "nome": "Valquiria",
-      "email": "val@gmail.com",
+      "nome": "Fagner",
+      "email": "fagner@fagner.com",
       "senha": "123456",
       "id": 2
     }
   ],
   "tasks": [
     {
-      "title": "Estudo",
-      "description": "Tenho que estudar React e Angular",
-      "risco": false,
-      "idUser": 1,
-      "id": 1
-    },
-    {
-      "title": "Estudar ",
-      "description": "Estudar .Net em C#",
+      "title": "teste",
+      "description": "Tarefa Fagner",
       "risco": false,
       "idUser": 2,
       "id": 2
